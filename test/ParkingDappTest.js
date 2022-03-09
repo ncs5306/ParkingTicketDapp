@@ -9,13 +9,6 @@ contract("ParkingDapp", accounts => {
 
         console.log(test.toString());
     
-
-        //let balance =  await tuitionController.getBalance();
-        //assert.equal(balance, 100);
-        //console.log(balance.toNumber());
-        //const tuition = await tuitionController.getTuition();
-        //console.log(tuition.toNumber());
-        //assert.equal(tuition.toNumber(), 100);
         
     });
     it("Checks if user can pay ticket", async () => {

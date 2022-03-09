@@ -2,6 +2,7 @@ pragma solidity ^0.8.11;
 
 contract ParkingDapp{
 
+    //struct holds parking ticket information
     struct Ticket{
         string firstName;
         string lastName;
@@ -26,12 +27,14 @@ contract ParkingDapp{
         fine = 10;
     }
 
+    //sets deployer as owner of the contract
     modifier _onlyOwner{
         require(msg.sender == owner);
         _;
     }
 
 
+    //function to add ticket 
     function addTicket (
         uint _ticketNumber, 
         string memory _licencePlate, 
@@ -52,7 +55,7 @@ contract ParkingDapp{
 
     }
 
-
+    //function for user to pay ticket, must send exact value in wei
     function payTicket(
         uint _ticketNumber,
         string memory _firstName,
@@ -75,12 +78,13 @@ contract ParkingDapp{
         TicketMap[_ticketNumber].paid = true;
     }
 
+    //allows owner to withdraw funds from the contract
     function transferFunds() public _onlyOwner{
         bool send = owner.send(address(this).balance);
         require(send, "Failed");
     }
 
-
+    //allows owner to view any tickets in the database 
     function getTicket(uint _ticketNumber) public view _onlyOwner 
         returns(Ticket memory){
 
@@ -88,7 +92,8 @@ contract ParkingDapp{
         return TicketMap[_ticketNumber];
     }
 
-    function checkBalance() public view returns(uint){
+    //admin can check the balance of the contract
+    function checkBalance() public view _onlyOwner returns(uint){
         return address(this).balance;
     }
 
